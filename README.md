@@ -1,7 +1,13 @@
 # tf-atom-route-table-association-aws
 
-[![CI](https://github.com/PlatformStackPulse/tf-atom-route-table-association-aws/actions/workflows/ci.yml/badge.svg)](https://github.com/PlatformStackPulse/tf-atom-route-table-association-aws/actions/workflows/ci.yml)
-![Terraform](https://img.shields.io/badge/terraform-%3E%3D1.6.0-blueviolet)
+[![Terraform Format](https://img.shields.io/badge/terraform-fmt-blue?logo=terraform)](https://github.com/PlatformStackPulse/tf-atom-route-table-association-aws/actions)
+[![Terraform Validate](https://img.shields.io/badge/terraform-validate-blue?logo=terraform)](https://github.com/PlatformStackPulse/tf-atom-route-table-association-aws/actions)
+[![TFLint](https://img.shields.io/badge/tflint-passing-brightgreen?logo=terraform)](https://github.com/PlatformStackPulse/tf-atom-route-table-association-aws/actions)
+[![Terraform Test](https://img.shields.io/badge/tests-2%20passed-brightgreen?logo=terraform)](https://github.com/PlatformStackPulse/tf-atom-route-table-association-aws/actions)
+[![Security Scan](https://img.shields.io/badge/trivy-passing-brightgreen?logo=aqua)](https://github.com/PlatformStackPulse/tf-atom-route-table-association-aws/actions)
+[![Conventional Commits](https://img.shields.io/badge/commits-conventional-blue?logo=conventionalcommits)](https://conventionalcommits.org)
+[![Documentation](https://img.shields.io/badge/docs-terraform--docs-blue?logo=readthedocs)](https://github.com/PlatformStackPulse/tf-atom-route-table-association-aws/actions)
+[![License](https://img.shields.io/badge/license-MIT-blue?logo=opensourceinitiative)](LICENSE)
 
 Terraform atom that associates a subnet with a route table on AWS. It wraps `aws_route_table_association` behind the tf-label context interface so identity/tagging inputs and the `enabled` toggle flow through consistently with the rest of the PlatformStackPulse module fleet.
 

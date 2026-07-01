@@ -3,9 +3,30 @@
 [![CI](https://github.com/PlatformStackPulse/tf-atom-route-table-association-aws/actions/workflows/ci.yml/badge.svg)](https://github.com/PlatformStackPulse/tf-atom-route-table-association-aws/actions/workflows/ci.yml)
 ![Terraform](https://img.shields.io/badge/terraform-%3E%3D1.6.0-blueviolet)
 
-## Purpose
+Terraform atom that associates a subnet with a route table on AWS. It wraps `aws_route_table_association` behind the tf-label context interface so identity/tagging inputs and the `enabled` toggle flow through consistently with the rest of the PlatformStackPulse module fleet.
 
-Terraform atom: AWS Route Table Association - links a subnet to a route table.
+## Features
+
+- Creates a single `aws_route_table_association` linking a subnet to a route table.
+- Full [tf-label](https://github.com/PlatformStackPulse/tf-label) context interface (`namespace`, `stage`, `name`, `tags`, `context`, …) for consistent identity and tagging.
+- `enabled` toggle — set `enabled = false` to create no resources (association is `count`-gated).
+- Input validation: `subnet_id` and `route_table_id` must be non-empty.
+- Outputs the association `id` (or `null` when disabled) and the resolved `enabled` flag.
+
+## Usage
+
+```hcl
+module "route_table_association" {
+  source = "git::https://github.com/PlatformStackPulse/tf-atom-route-table-association-aws.git?ref=v1.0.0"
+
+  namespace = "eg"
+  stage     = "prod"
+  name      = "public"
+
+  subnet_id      = "subnet-0123456789abcdef0"
+  route_table_id = "rtb-0123456789abcdef0"
+}
+```
 
 ## Module Documentation
 
@@ -66,3 +87,22 @@ Terraform atom: AWS Route Table Association - links a subnet to a route table.
 | <a name="output_enabled"></a> [enabled](#output\_enabled) | Whether the module is enabled |
 | <a name="output_id"></a> [id](#output\_id) | ID of the route table association |
 <!-- END_TF_DOCS -->
+
+## Tests
+
+Unit tests use Terraform's native test framework with a mocked AWS provider (no real AWS calls, no credentials required). They assert on plan-known values: the `enabled` flag, planned resource count, and input pass-through, plus that the disabled path creates nothing.
+
+```bash
+# Unit tests (mocked provider — no AWS credentials)
+terraform init -backend=false
+terraform test -test-directory=tests/unit
+
+# or via the Makefile
+make test-unit
+```
+
+Integration tests (requiring real AWS credentials) live under `tests/integration` and run with:
+
+```bash
+terraform test -test-directory=tests/integration
+```
